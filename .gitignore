@@ -1,0 +1,21 @@
+# Godot 4
+.godot/
+*.tmp
+/game/export/
+/build/
+
+# Blender (copias de seguridad automáticas)
+*.blend1
+*.blend2
+
+# Krita / editores (copias de seguridad)
+*.kra~
+*~
+
+# Sistema operativo
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Telemetría y guardados locales de pruebas
+/telemetry/

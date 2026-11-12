@@ -52,7 +52,7 @@ Todo con cápsulas, cubos o placeholders de KayKit/Quaternius.
 **En curso (2026-11-07):**
 - ✅ Estilo del moodboard aplicado al prototipo (suelo, luz, niebla, decorado y paleta).
 - ✅ Menú principal, selección de campeón, ajustes, guardado, Esencia, Armería (9 mejoras) y 8 logros que desbloquean 3 armas.
-- ✅ Orrun 3D probado (2026-11-08) con Hyper3D y Blender; **descartado al pasar a 2D** (el pipeline queda archivado en `tools/blender/`).
+- ✅ Orrun 3D probado (2026-11-08) con Hyper3D y Blender; **descartado al pasar a 2D** y borrado del proyecto (2026-11-12).
 - ✅ **Paso a 2D (2026-11-12):** Orrun como marioneta de 10 piezas animada por código (andar, puñetazo, zancada, golpe de tierra, paso, muerte), los 3 enemigos del Bosque con su dibujo y animación procedural (salto, galope, balanceo), suelo, efectos, telegrafías, jefa, cofres y eventos en 2D. Rendimiento: 1.500 enemigos con 5 ms de simulación y 2,2 ms de dibujado.
 - ✅ Mejoras tras la primera prueba (2026-11-12): marioneta recortada del dibujo entero (proporciones fieles), animaciones nuevas (paso pesado, directo y martillazo con congelación de impacto, embestida con estela, salto de esquiva, golpe de tierra), arreglado que la horda dejara de dibujarse al alejarse del centro y aparición justo fuera de la vista con más densidad, y cartas de elección con color e icono por categoría (arma, reliquia, kit, aumento, evolución, curación).
 - Provisional (dibujado por código, falta su arte): pilares, árboles, setas, urnas, cofres, mercader, altar, contrato y la Madre Raíz (usa el Tronco Hueco teñido).

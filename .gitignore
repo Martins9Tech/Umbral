@@ -4,10 +4,6 @@
 /game/export/
 /build/
 
-# Blender (copias de seguridad automáticas)
-*.blend1
-*.blend2
-
 # Krita / editores (copias de seguridad)
 *.kra~
 *~
@@ -20,9 +16,8 @@ desktop.ini
 # Telemetría y guardados locales de pruebas
 /telemetry/
 
-# Descargas originales de IA 3D (pesadas): solo se versiona el modelo optimizado
+# Descargas comprimidas
 *.zip
-art/modelos/*/fuente/
 
 # Configuración local de la API de imágenes (endpoint de Azure)
 tools/ia/config.local.json

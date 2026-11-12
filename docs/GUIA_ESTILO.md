@@ -95,7 +95,7 @@ Desde el 2026-11-12 el juego es 2D. Todo el arte se genera con una IA de imágen
 Tamaños en pantalla (1 m = 56 px a 1080p): Orrun 2,7 m; Seta 1,25 m; Lobo 1,25 m; Tronco 2,7 m.
 
 ## Referencias de modelado
-1. ✅ **Hoja de vistas de Orrun:** [art/referencias/orrun_vistas.png](../art/referencias/orrun_vistas.png), con las vistas recortadas por separado (`orrun_frente`, `orrun_lado`, `orrun_espalda`, `orrun_tres_cuartos`) para la IA de 3D.
+1. ✅ **Hoja de vistas de Orrun:** [art/referencias/orrun_vistas.png](../art/referencias/orrun_vistas.png), con las vistas recortadas por separado (`orrun_frente`, `orrun_lado`, `orrun_espalda`, `orrun_tres_cuartos`). Se usan como referencia al generar su arte 2D.
 2. Hojas de vistas de los 3 enemigos del Bosque (siguiente).
 3. Moodboards de los otros reinos en este mismo estilo, cuando lleguemos a ellos.
 

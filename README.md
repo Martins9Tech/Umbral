@@ -47,7 +47,7 @@ Consejo: quedarse quieto con Orrun acumula Piedra (menos daño recibido) y al mo
 ## Estructura
 - `game/`: proyecto de Godot (código, escenas, contenido `.tres` y assets importados).
 - `art/`: fuentes de arte (`.blend`, `.kra`…), fuera del proyecto de Godot.
-- `tools/`: scripts auxiliares (`sprites/cortar_hoja.py` para recortar hojas de arte 2D, informe de telemetría, y el pipeline 3D archivado de Blender).
+- `tools/`: scripts auxiliares: `ia/` genera imágenes con la API de Azure, `sprites/` recorta y prepara el arte 2D, y el informe de telemetría.
 - `docs/`: documentación de diseño y técnica.
 
 ## Documentación

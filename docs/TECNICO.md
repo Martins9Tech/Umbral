@@ -10,10 +10,10 @@
 |------|----------|-------|
 | Motor | **Godot 4.7** | Renderer **Forward+** (PC) |
 | Lenguaje | **GDScript con tipado estático** | El núcleo de simulación (hordas, proyectiles, colisiones) queda aislado para migrarlo a **C++ (GDExtension)** o C# si el profiler lo pide |
-| Arte | **2D**: IA de imágenes + scripts de recorte (`tools/sprites/`) | El pipeline 3D (Blender) queda archivado en `tools/blender/` |
-| Versiones | **Git + Git LFS** | `.blend`, `.glb`, `.png` y `.wav` por LFS |
+| Arte | **2D**: IA de imágenes (`tools/ia/`) + scripts de recorte (`tools/sprites/`) | Ver [GUIA_ESTILO §11](GUIA_ESTILO.md#11-arte-2d-flujo-de-producción) |
+| Versiones | **Git + Git LFS** | `.png`, `.ttf` y audio por LFS |
 | Tests | **gdUnit4** (o GUT) | Lógica pura: stats, fórmulas, efectos |
-| Automatización | **Claude Code + MCP de Godot y Blender** | Ya conectados en este equipo: crear escenas, exportar modelos en lote, scripts de Blender |
+| Automatización | **Claude Code + MCP de Godot** + API de imágenes de Azure | Escenas, pruebas automáticas y generación de arte por lotes |
 
 > **Decidido:** GDScript. Si el profiler lo exige, el núcleo de hordas se reescribe en C++ con GDExtension (la vía más rápida) sin tocar el resto del juego.
 
@@ -152,11 +152,11 @@ Cambios del calibrado: enemigos más rápidos (el Lobo supera al jugador) y con 
   /scenes             ← hub, run, reinos
   /ui
   /vfx  /shaders  /audio
-  /assets             ← .glb y texturas importadas
+  /assets             ← sprites, iconos, marcos de interfaz y fuentes
   /debug              ← consola, stress tests
   /tests
 /art                  ← fuentes: .blend, .kra, etc. (fuera del proyecto Godot)
-/tools                ← scripts de exportación de Blender, importador de hojas de balance
+/tools                ← generación de imágenes (ia/), recorte y preparación de arte (sprites/), telemetría
 /docs
 ```
 
@@ -180,50 +180,10 @@ Las tablas numéricas (armas por nivel, enemigos, curvas de XP y del Director) v
 
 ## 5. Pipeline de arte
 
-> **Actual (2D):** ver [GUIA_ESTILO §11](GUIA_ESTILO.md#11-arte-2d-flujo-de-producción). Lo que sigue es el pipeline 3D original, archivado por si se recupera.
+El juego es 2D desde el 2026-11-12 (el prototipo 3D con Blender y Hyper3D se descartó y se borró). Todo el flujo de producción de arte está en [GUIA_ESTILO §11](GUIA_ESTILO.md#11-arte-2d-flujo-de-producción): generación con la API de imágenes, recorte, marionetas de campeones, enemigos con animación por código, iconos, decorado, marcos de interfaz y fuentes.
 
-### 5.1 Especificaciones orientativas
-| Elemento | Triángulos | Texturas | Animación |
-|----------|-----------|----------|-----------|
-| Campeón | 5k-12k | 1-2k, pintada a mano | Esqueleto + `AnimationTree` |
-| Jefe | 10k-25k | 2k | Esqueleto |
-| Enemigo común | 300-1.500 | Atlas compartido de 256-512 | **VAT** |
-| Élite | 1k-3k | 512 | VAT o esqueleto |
-| Escenario | Kit modular | Atlas por reino | — |
-
-- **Escala:** 1 unidad = 1 m; campeones de ~2 m (proporciones exageradas).
-- **Exportación:** aplicar transformaciones y exportar `.glb`; el exportador convierte el eje Z-up de Blender al Y-up de Godot.
-- **Nombres:** `chr_orrun.glb`, `enm_bosque_seta.glb`, `prop_bosque_arbol_01.glb`. Animaciones: `idle`, `run`, `dash`, `cast_tech`, `cast_ult`, `hit`, `death`, `victory`.
-- **Importación:** usar sufijos de Godot (`-col`, `-colonly`) para colisiones y scripts de post-importación para asignar materiales.
-- Godot puede importar `.blend` directamente (con Blender instalado), lo que es cómodo para iterar. Para builds estables se recomienda exportar `.glb` con un script por lotes, automatizable con el MCP de Blender.
-
-### 5.1.1 Campeones generados con IA (Hyper3D)
-Flujo usado con Orrun:
-1. Generar el modelo en Hyper3D (Rodin) desde las vistas de `art/referencias/` y descargar las animaciones (máx. 5 por descarga; todas comparten esqueleto de 52 huesos). Los zips originales van a `art/modelos/<campeón>/fuente/` (ignorado por git). Usar `base_basic_pbr.glb`, que es el que lleva esqueleto.
-2. Optimizar en Blender en segundo plano (~70 s):
-   `blender -b --python tools/blender/optimize_character.py -- --glb A/base_basic_pbr.glb B/base_basic_pbr.glb --emissive A/texture_emissive.png --out art/modelos/orrun/orrun.glb --tris 15000 --tex 1024`
-   El script junta todas las animaciones en un GLB (una pista NLA por animación), quita objetos sueltos, reduce la malla, conecta la textura emisiva, baja las texturas y deja las animaciones **en el sitio** (quita la deriva del hueso `Hips`; el juego mueve al personaje). Las que contienen `Dying` o `Fall` conservan su desplazamiento (`--keep-root-motion`).
-3. Copiar el GLB a `game/assets/models/<campeón>/` y declarar en el kit `model_path`, `model_scale` y `model_anims` (acción del juego → nombre de la animación). `Player` sustituye la cápsula por el modelo, avanza el `AnimationPlayer` a mano (se congela en pausa), aplica tintes con `material_overlay` y añade un borde de luz para que la silueta destaque sobre el suelo.
-
-### 5.2 Animación
-- **Rig:** Rigify (gratis) o Auto-Rig Pro (de pago).
-- **Prototipos:** Mixamo para animaciones humanoides rápidas (revisa su licencia actual).
-- **Enemigos:** andar, atacar y morir, horneadas a VAT con un add-on de Blender (p. ej. OpenVAT) y un shader propio en Godot.
-
-### 5.3 Texturizado
-- **Opción A (rápida y coherente):** low-poly + *gradient atlas* (UVs sobre una paleta de colores) + shader toon. Ideal para enemigos y escenario.
-- **Opción B (más "MOBA"):** pintado a mano con Blender Texture Paint, Krita, ArmorPaint o Substance Painter. Para campeones y jefes.
-- **Recomendado:** mixto, B para personajes protagonistas y A para todo lo demás.
-
-### 5.4 VFX
-- `GPUParticles3D` + shaders (disolución, fresnel, ruido animado, *gradient mapping*).
-- Flipbooks renderizados en Blender (o con EmberGen, de pago).
-- Las telegrafías se implementan como sistema propio, no como VFX sueltos (§4.7).
-
-### 5.5 Assets para prototipar (gratuitos, CC0)
-- **KayKit**, **Quaternius**, **Kenney**: personajes, mazmorras y props low-poly, perfectos como placeholders.
-- **Poly Haven:** texturas y HDRI.
-- **IA generativa 3D** (Meshy, Tripo, Rodin…): útil para placeholders o bases que luego se retopologizan; revisa las licencias.
+- **Escala:** 1 m = 56 px a 1080p (`Run.PPM`); Orrun mide 2,7 m.
+- **VFX:** dibujados por código (`VfxPool`, `Efecto` en `Player`), partículas 2D y shaders `canvas_item`.
 
 ### 5.6 Audio
 - **SFX de prototipo:** jsfxr o ChipTone.
@@ -238,10 +198,9 @@ Flujo usado con Orrun:
 | Área | Herramienta | Coste |
 |------|-------------|-------|
 | Motor | Godot 4.7 | Gratis |
-| 3D, rig y animación | Blender (+ Rigify) / Auto-Rig Pro | Gratis / pago |
-| Texturas | Krita, Material Maker / ArmorPaint / Substance Painter | Gratis / bajo / pago |
+| Arte 2D | API de imágenes de Azure (gpt-image) + scripts propios; Krita para retoques | Pago por uso / gratis |
 | UI e iconos | Krita, Aseprite, Inkscape, Figma (maquetas) | Gratis / bajo |
-| VFX | Shaders de Godot, Blender / EmberGen | Gratis / pago |
+| VFX | Shaders y partículas 2D de Godot | Gratis |
 | Audio | Reaper, Audacity, jsfxr / FMOD | Bajo / gratis |
 | Versiones | Git + Git LFS (GitHub o GitLab) | Gratis |
 | Gestión | HacknPlan (específico para gamedev), Jira, Trello o Notion | Gratis / pago |

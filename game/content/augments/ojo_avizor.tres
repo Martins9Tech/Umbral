@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"ojo_avizor"
+display_name = "Ojo Avizor"
+description = "+12 % de probabilidad de crítico."
+rarity = 0
+stats = Array[StringName]([&"crit_chance"])
+kinds = Array[int]([0])
+values = Array[float]([0.12])

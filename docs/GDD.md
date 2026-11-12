@@ -9,7 +9,7 @@
 
 ## 1. Visión
 
-**Pitch:** un roguelike de supervivencia contra hordas, en 3D con vista isométrica, donde controlas a un campeón con kit propio que combina **habilidades manuales** con un **arsenal automático**, y viajas entre reinos a través de **portales** para derrotar a **jefes con varias fases**.
+**Pitch:** un roguelike de supervivencia contra hordas, en 2D con vista cenital ligeramente inclinada, donde controlas a un campeón con kit propio que combina **habilidades manuales** con un **arsenal automático**, y viajas entre reinos a través de **portales** para derrotar a **jefes con varias fases**.
 
 **Fantasía del jugador:** empiezas débil y terminas siendo una fuerza de la naturaleza que limpia la pantalla, pero con la expresión de habilidad de un MOBA: apuntar, esquivar ataques telegrafiados y elegir el momento de la definitiva.
 
@@ -231,19 +231,26 @@ Poder (daño) · Amplitud (área) · Celeridad (velocidad de proyectil) · Persi
 
 ### 5.4 Evoluciones
 - **Regla:** arma al nivel 8 + reliquia concreta (a cualquier nivel) → el siguiente cofre de élite la evoluciona.
-- Ejemplos:
-  - Cuchillas Orbitales + Multiplicidad → **Danza de Mil Filos**
-  - Mortero Alquímico + Amplitud → **Lluvia de Magma**
-  - Cadena de Escarcha + Persistencia → **Invierno Eterno**
+- Implementadas en el prototipo:
+  - Puño Telúrico (firma de Orrun) + Amplitud → **Puño del Monte** (onda en 360°)
+  - Cuchillas Orbitales + Presteza → **Danza de Mil Filos** (8 cuchillas doradas)
+  - Esquirlas Umbrías + Poder → **Tormenta Umbría** (ráfagas de 10 que perforan)
   - Campana Resonante + Vigor → **Campana del Juicio** (su daño escala con la vida máx.)
+- Ideas para armas futuras: Mortero Alquímico + Amplitud → **Lluvia de Magma**; Cadena de Escarcha + Persistencia → **Invierno Eterno**.
 - Cada arma de firma tiene su propia evolución.
+- **Cofres:** los sueltan las élites. Si hay un arma lista para evolucionar, la evolucionan; si no, dan 1 mejora (o 3, con un 25 % de probabilidad) de lo que ya tienes.
 - El **Códice** registra las evoluciones descubiertas; buscarlas es parte del atractivo.
 - *(Futuro)* **Fusiones:** dos armas al máximo se combinan en una y liberan un hueco.
 
 ### 5.5 Aumentos (inspirados en Arena)
 - **Cuándo:** en los minutos 4 y 8 de cada reino y al derrotar a cada jefe. Eliges 1 de 3, con 1 recambio gratis por ronda.
 - **Rarezas:** **Eco** (sencillos) → **Arcano** (cambian una mecánica) → **Mítico** (rompen reglas). La probabilidad de las rarezas altas sube con la profundidad.
-- Algunos aumentos pertenecen a un **set**: reunir 2 o 3 del mismo set da un bono extra.
+- Algunos aumentos pertenecen a un **set**: reunir 2 o 3 del mismo set da un bono extra *(pendiente)*.
+- **Implementado en el prototipo (2026-11-07):** minutos 4 y 8, 1 de 3 con 1 recambio. Probabilidad de rareza Eco/Arcano/Mítico: 60/33/7 % antes del minuto 6 y 30/48/22 % después. 17 aumentos:
+  - **Eco:** Piel de Corteza, Ojo Avizor, Sabiduría Antigua, Paso Ligero, Filo Agudo, Segundo Aliento.
+  - **Arcano:** Combustión, Cadena de Mando, Sed de Batalla, Espinas, Furia.
+  - **Mítico:** Todo o Nada, Multiplicidad Absoluta, Ímpetu Eterno, Coloso, Cristal del Tiempo, Vampirismo.
+  - Se añadieron los **golpes críticos** (5 % base, ×1,5) para que los aumentos de crítico tengan sentido.
 
 | Rareza | Aumento | Efecto |
 |--------|---------|--------|
@@ -272,6 +279,8 @@ Cada arma y cada aumento tienen etiquetas. Al reunir varias iguales se activan b
 | Sombra | +10 % crítico | Ejecuta por debajo del 8 % | Los críticos generan esquirlas |
 | Orbital | +1 orbital | +30 % velocidad de giro | Los orbitales disparan proyectiles |
 
+**Implementado en el prototipo (2026-11-07):** con 6 huecos de arma, los umbrales son **2 y 3 armas** (no 2/4/6), contando la de firma. Sinergias de Físico, Fuego, Hielo, Rayo y Sombra (detalle en `systems/synergies.gd`). Para que existan se añadieron los **estados alterados** (quemadura, ralentización, congelación/aturdimiento) y 7 armas elementales: Mortero Alquímico y Minas de Brea (Fuego), Cadena de Escarcha y Aura Gélida (Hielo), Pararrayos y Orbe de Tormenta (Rayo) y Guadaña Umbría (Sombra).
+
 *(Futuro)* **Reacciones elementales:** Quemado + Congelado = *Choque Térmico* (gran daño); Mojado + Rayo = *Electrocución* en cadena; etc.
 
 ### 5.7 Economía en partida
@@ -287,6 +296,8 @@ Cada arma y cada aumento tienen etiquetas. Al reunir varias iguales se activan b
 - **Cofre Maldito:** más recompensa, pero invoca élites.
 - **Hordas especiales:** anillo que se cierra, estampida, eclipse (visión reducida).
 - **Objetos destructibles** (braseros, cristales…) con objetos clásicos del género: comida, imán total, bomba de pantalla, reloj (congela a los enemigos).
+
+> **Implementado en el prototipo (2026-11-07):** oro (7 % por enemigo, 15 por élite, 40 el Heraldo, 20 por cofre), 18 urnas rompibles (comida 40 %, oro 25 %, imán 20 %, bomba 15 %), Altar de Sangre (3:00), Mercader Errante (5:30, 75 s, 5 artículos) y Contrato (7:30, 250 muertes en 30 s → cofre + 50 de oro). Pendientes: Santuario de Caos, Cofre Maldito y hordas especiales extra.
 
 ### 5.9 Mutadores de Caos (inspirados en ARAM: Caos)
 Modificadores exagerados que afectan **a todo** (a ti y a los enemigos), con ventaja y contrapartida:
@@ -356,6 +367,8 @@ Antes de la run puedes activar pactos: enemigos con más vida, élites más frec
 | 10:00 | **Convocatoria** | La horda se retira, se forma la arena y aparece el jefe |
 | Jefe vencido | **Umbral** | Cofre del jefe + aumento + elección de portal |
 
+> **Implementado en el prototipo (2026-11-07):** fases Llegada (0-2), Avance (2-4), Escalada (4-6), El Heraldo (6-8), Clímax (8-10) y La Madre Raíz (10+). Élites en 2:00, 3:30, 5:00, 7:00, 8:00 y 9:20; Heraldo en 6:00; estampida en 9:00; jefa en 10:00. Los aumentos y el mercader llegarán después. Se ve en una barra bajo el reloj.
+>
 > **Variante a probar:** que el jugador invoque al jefe cuando quiera desde un *Altar del Umbral* (a partir del minuto 8). Cada minuto extra sube la dificultad y las recompensas, como el teleportador de Risk of Rain.
 
 ---
@@ -454,7 +467,8 @@ Quemadura · Veneno (acumulable) · Ralentización · Congelación · Aturdimien
 
 ## 11. Cámara, controles y UX
 
-- **Cámara:** fija, estilo MOBA (perspectiva con FOV estrecho e inclinación de ~55°), sin rotación. Se aleja ligeramente al subir de nivel y al aparecer el jefe.
+- **Cámara:** 2D fija que sigue al campeón (unos 34 × 19 m visibles a 1080p), sin rotación. Se podrá alejar ligeramente al subir de nivel y al aparecer el jefe.
+- **Decisión (2026-11-12): el juego pasa a 2D** para ahorrar tiempo y costes de arte. La lógica ya era 2D; solo cambió el dibujo. Ver [TECNICO §2](TECNICO.md#2-mundo-2d) y [GUIA_ESTILO §11](GUIA_ESTILO.md#11-arte-2d-flujo-de-producción).
 - **Controles** (todos reasignables):
 
 | Acción | Teclado y ratón | Mando |
@@ -475,7 +489,7 @@ Quemadura · Veneno (acumulable) · Ralentización · Congelación · Aturdimien
 
 ## 12. Dirección de arte y audio
 
-- **Estilo:** estilizado, colores saturados, proporciones heroicas y siluetas exageradas. Pintado a mano en campeones y jefes; low-poly con atlas de color en enemigos y escenarios (ver [TECNICO.md](TECNICO.md#5-pipeline-de-arte-blender--godot)).
+- **Estilo:** 2D ilustrado de fantasía oscura, proporciones heroicas y siluetas claras. Cada personaje se dibuja una vez mirando a la derecha y se voltea; los campeones se animan por piezas (marioneta) y los enemigos con movimiento por código (ver [GUIA_ESTILO §11](GUIA_ESTILO.md#11-arte-2d-flujo-de-producción)).
 - **Cada reino:** paleta propia y facción con siluetas reconocibles.
 - **Código de color de gameplay (reservado):**
   - 🔴 Rojo/naranja: peligro enemigo (telegrafías)
@@ -488,7 +502,7 @@ Quemadura · Veneno (acumulable) · Ralentización · Congelación · Aturdimien
 
 ## 13. Ideas futuras (backlog)
 
-- **Co-op** 2-4 jugadores, local u online (se decide antes de la Fase 2 porque afecta a la arquitectura; ver [ROADMAP](ROADMAP.md#decisiones)).
+- **Co-op online** 2-4 jugadores (decidido; el código se prepara desde la Fase 2 y la red llega más adelante; ver [TECNICO §7](TECNICO.md#7-multijugador-online)).
 - Desafío diario o semanal con semilla y tabla de puntuaciones.
 - Modo Infinito por reino.
 - Reacciones elementales y fusiones de armas.

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://systems/augments/vampirismo.gd" id="2_behaviour"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"vampirismo"
+display_name = "Vampirismo"
+description = "El 3 % del daño que haces te cura (máx. 8 de vida por segundo)."
+rarity = 2
+stats = Array[StringName]([])
+kinds = Array[int]([])
+values = Array[float]([])
+behaviour = ExtResource("2_behaviour")

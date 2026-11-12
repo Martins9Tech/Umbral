@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://systems/augments/sed_de_batalla.gd" id="2_behaviour"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"sed_de_batalla"
+display_name = "Sed de Batalla"
+description = "Cada enemigo que matas te cura 0,6 de vida (máx. 6 por segundo)."
+rarity = 1
+stats = Array[StringName]([])
+kinds = Array[int]([])
+values = Array[float]([])
+behaviour = ExtResource("2_behaviour")

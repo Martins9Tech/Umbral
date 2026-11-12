@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Script" path="res://core/data/enemy_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"seta_andante"
+display_name = "Seta Andante"
+archetype = &"enjambre"
+max_hp = 10.0
+speed = 3.7
+radius = 0.4
+height = 1.0
+contact_dps = 7.0
+xp = 1
+cost = 1.0
+min_minute = 0.0
+weight = 10.0
+color = Color(0.75, 0.38, 0.18, 1)
+sprite_height = 1.25
+anim = &"salto"

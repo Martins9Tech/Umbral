@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3]
+
+[ext_resource type="Script" path="res://core/data/weapon_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://systems/weapons/puno_telurico.gd" id="2_behaviour"]
+[ext_resource type="Resource" path="res://content/weapons/puno_del_monte.tres" id="3_evolution"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"puno_telurico"
+display_name = "Puño Telúrico"
+description = "Golpe en cono contra el enemigo más cercano que empuja. Arma de firma de Orrun."
+tags = Array[StringName]([&"fisico", &"cuerpo_a_cuerpo"])
+is_signature = true
+behaviour = ExtResource("2_behaviour")
+evolution_relic = &"amplitud"
+evolution = ExtResource("3_evolution")

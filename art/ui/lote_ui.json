@@ -1,0 +1,20 @@
+[
+ {
+  "prompt": "Game UI element for a dark fantasy action roguelike, hand-painted premium style, perfectly symmetrical, straight-on front view, flat and centered. A square menu panel: a thin ornate frame of carved dark stone with an aged bronze inner rim and a small amber rune gem in each corner; the frame is about 7 percent of the width; the center is a flat, solid very dark warm brown. The center area must be completely empty and flat (no ornaments, no text), so it can be stretched. Palette: carved dark stone, aged bronze, small glowing amber rune gems. No text, no letters.",
+  "size": "1024x1024",
+  "transparent": false,
+  "out": "art/ui/marco_panel.png"
+ },
+ {
+  "prompt": "Game UI element for a dark fantasy action roguelike, hand-painted premium style, perfectly symmetrical, straight-on front view, flat and centered. A wide horizontal title plaque: a dark stone and bronze banner with pointed ends decorated with amber rune gems, flat dark center, transparent background outside the plaque. The center area must be completely empty and flat (no ornaments, no text), so it can be stretched. Palette: carved dark stone, aged bronze, small glowing amber rune gems. No text, no letters.",
+  "size": "1536x1024",
+  "transparent": true,
+  "out": "art/ui/placa_titulo.png"
+ },
+ {
+  "prompt": "Game UI element for a dark fantasy action roguelike, hand-painted premium style, perfectly symmetrical, straight-on front view, flat and centered. A wide rounded rectangular button plate: dark stone with a thin aged bronze rim and tiny amber gems on the left and right ends, flat dark center, transparent background outside the button. The center area must be completely empty and flat (no ornaments, no text), so it can be stretched. Palette: carved dark stone, aged bronze, small glowing amber rune gems. No text, no letters.",
+  "size": "1536x1024",
+  "transparent": true,
+  "out": "art/ui/boton.png"
+ }
+]

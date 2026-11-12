@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://systems/augments/cadena_de_mando.gd" id="2_behaviour"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"cadena_de_mando"
+display_name = "Cadena de Mando"
+description = "Cada enemigo que matas reduce 0,06 s el enfriamiento de tu Técnica."
+rarity = 1
+stats = Array[StringName]([])
+kinds = Array[int]([])
+values = Array[float]([])
+behaviour = ExtResource("2_behaviour")

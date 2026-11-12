@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Script" path="res://core/data/enemy_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"tronco_hueco"
+display_name = "Tronco Hueco"
+archetype = &"bruto"
+max_hp = 70.0
+speed = 2.4
+radius = 0.9
+height = 2.2
+contact_dps = 24.0
+xp = 5
+cost = 6.0
+min_minute = 2.0
+weight = 1.5
+color = Color(0.43, 0.29, 0.16, 1)
+sprite_height = 2.7
+anim = &"balanceo"

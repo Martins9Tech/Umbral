@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"sabiduria_antigua"
+display_name = "Sabiduría Antigua"
+description = "+25 % de experiencia por gema."
+rarity = 0
+stats = Array[StringName]([&"xp_gain"])
+kinds = Array[int]([1])
+values = Array[float]([0.25])

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://systems/augments/segundo_aliento.gd" id="2_behaviour"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"segundo_aliento"
+display_name = "Segundo Aliento"
+description = "Al bajar del 30 % de vida te curas un 40 % (una vez por partida)."
+rarity = 0
+stats = Array[StringName]([])
+kinds = Array[int]([])
+values = Array[float]([])
+behaviour = ExtResource("2_behaviour")

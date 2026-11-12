@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"coloso"
+display_name = "Coloso"
+description = "Eres un 50 % más grande: +60 % de vida máxima y de área. Pero -20 % de velocidad."
+rarity = 2
+stats = Array[StringName]([&"size", &"max_hp", &"area", &"move_speed"])
+kinds = Array[int]([0, 1, 1, 1])
+values = Array[float]([0.5, 0.6, 0.6, -0.2])

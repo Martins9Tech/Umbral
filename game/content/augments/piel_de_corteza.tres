@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"piel_de_corteza"
+display_name = "Piel de Corteza"
+description = "+20 % de vida máxima."
+rarity = 0
+stats = Array[StringName]([&"max_hp"])
+kinds = Array[int]([1])
+values = Array[float]([0.2])

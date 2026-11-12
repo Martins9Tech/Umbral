@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://systems/augments/combustion.gd" id="2_behaviour"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"combustion"
+display_name = "Combustión"
+description = "Los enemigos que matas tienen un 20 % de probabilidad de explotar y dañar a los de alrededor."
+rarity = 1
+stats = Array[StringName]([])
+kinds = Array[int]([])
+values = Array[float]([])
+behaviour = ExtResource("2_behaviour")

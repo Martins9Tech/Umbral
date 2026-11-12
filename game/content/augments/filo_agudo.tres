@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"filo_agudo"
+display_name = "Filo Agudo"
+description = "+15 % de daño."
+rarity = 0
+stats = Array[StringName]([&"damage"])
+kinds = Array[int]([1])
+values = Array[float]([0.15])

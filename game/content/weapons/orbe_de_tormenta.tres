@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3]
+
+[ext_resource type="Script" path="res://core/data/weapon_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://systems/weapons/orbe_de_tormenta.gd" id="2_behaviour"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"orbe_de_tormenta"
+display_name = "Orbe de Tormenta"
+description = "Esferas eléctricas orbitan a distancia y electrocutan a los cercanos."
+tags = Array[StringName]([&"rayo", &"orbital"])
+is_signature = false
+behaviour = ExtResource("2_behaviour")

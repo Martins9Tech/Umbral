@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"multiplicidad_absoluta"
+display_name = "Multiplicidad Absoluta"
+description = "+2 proyectiles y +2 cuchillas orbitales. Pero -15 % de daño."
+rarity = 2
+stats = Array[StringName]([&"amount", &"damage"])
+kinds = Array[int]([0, 1])
+values = Array[float]([2.0, -0.15])

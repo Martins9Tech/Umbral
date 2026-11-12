@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3]
+
+[ext_resource type="Script" path="res://core/data/weapon_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://systems/weapons/esquirlas_umbrias.gd" id="2_behaviour"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"tormenta_umbria"
+display_name = "Tormenta Umbría"
+description = "Evolución de las Esquirlas Umbrías: ráfagas de 8 esquirlas que perforan 3 enemigos."
+tags = Array[StringName]([&"sombra", &"proyectil"])
+is_signature = false
+behaviour = ExtResource("2_behaviour")
+is_evolution = true

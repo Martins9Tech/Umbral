@@ -1,0 +1,80 @@
+[
+ {
+  "prompt": "2D game asset for a dark fantasy top-down action roguelike. Hand-painted stylized game art that matches a mossy stone golem hero: bold readable shapes, thin dark outline around the whole silhouette, soft light from the top left, warm autumn forest palette (warm grey-brown stone, moss green, rust, amber glow), painterly texture. Three-quarter view seen slightly from above. Subject: a ruined ancient stone pillar with a broken top covered in moss, cracked carved stone blocks and a faint amber rune. A single isolated object, centered, fully visible with a small margin. Transparent background, no ground, no cast shadow, no text, no frame.",
+  "size": "1024x1536",
+  "transparent": true,
+  "out": "art/2d/decorado/pilar_1.png"
+ },
+ {
+  "prompt": "2D game asset for a dark fantasy top-down action roguelike. Hand-painted stylized game art that matches a mossy stone golem hero: bold readable shapes, thin dark outline around the whole silhouette, soft light from the top left, warm autumn forest palette (warm grey-brown stone, moss green, rust, amber glow), painterly texture. Three-quarter view seen slightly from above. Subject: a short broken stone column stump with a few fallen blocks and ivy. A single isolated object, centered, fully visible with a small margin. Transparent background, no ground, no cast shadow, no text, no frame.",
+  "size": "1024x1024",
+  "transparent": true,
+  "out": "art/2d/decorado/pilar_2.png"
+ },
+ {
+  "prompt": "2D game asset for a dark fantasy top-down action roguelike. Hand-painted stylized game art that matches a mossy stone golem hero: bold readable shapes, thin dark outline around the whole silhouette, soft light from the top left, warm autumn forest palette (warm grey-brown stone, moss green, rust, amber glow), painterly texture. Three-quarter view seen slightly from above. Subject: an autumn forest tree with a thick twisted trunk and a large rounded canopy of red-orange leaves. A single isolated object, centered, fully visible with a small margin. Transparent background, no ground, no cast shadow, no text, no frame.",
+  "size": "1024x1536",
+  "transparent": true,
+  "out": "art/2d/decorado/arbol_1.png"
+ },
+ {
+  "prompt": "2D game asset for a dark fantasy top-down action roguelike. Hand-painted stylized game art that matches a mossy stone golem hero: bold readable shapes, thin dark outline around the whole silhouette, soft light from the top left, warm autumn forest palette (warm grey-brown stone, moss green, rust, amber glow), painterly texture. Three-quarter view seen slightly from above. Subject: a dark gnarled autumn oak with a dense crown of rust and amber leaves and visible roots. A single isolated object, centered, fully visible with a small margin. Transparent background, no ground, no cast shadow, no text, no frame.",
+  "size": "1024x1536",
+  "transparent": true,
+  "out": "art/2d/decorado/arbol_2.png"
+ },
+ {
+  "prompt": "2D game asset for a dark fantasy top-down action roguelike. Hand-painted stylized game art that matches a mossy stone golem hero: bold readable shapes, thin dark outline around the whole silhouette, soft light from the top left, warm autumn forest palette (warm grey-brown stone, moss green, rust, amber glow), painterly texture. Three-quarter view seen slightly from above. Subject: a dead twisted tree with only a few orange leaves and long hanging moss. A single isolated object, centered, fully visible with a small margin. Transparent background, no ground, no cast shadow, no text, no frame.",
+  "size": "1024x1536",
+  "transparent": true,
+  "out": "art/2d/decorado/arbol_3.png"
+ },
+ {
+  "prompt": "2D game asset for a dark fantasy top-down action roguelike. Hand-painted stylized game art that matches a mossy stone golem hero: bold readable shapes, thin dark outline around the whole silhouette, soft light from the top left, warm autumn forest palette (warm grey-brown stone, moss green, rust, amber glow), painterly texture. Three-quarter view seen slightly from above. Subject: a cluster of glowing amber mushrooms of different sizes on a small mossy patch, emitting warm light. A single isolated object, centered, fully visible with a small margin. Transparent background, no ground, no cast shadow, no text, no frame.",
+  "size": "1024x1024",
+  "transparent": true,
+  "out": "art/2d/decorado/setas.png"
+ },
+ {
+  "prompt": "2D game asset for a dark fantasy top-down action roguelike. Hand-painted stylized game art that matches a mossy stone golem hero: bold readable shapes, thin dark outline around the whole silhouette, soft light from the top left, warm autumn forest palette (warm grey-brown stone, moss green, rust, amber glow), painterly texture. Three-quarter view seen slightly from above. Subject: a small pile of mossy grey-brown rocks with a few fallen autumn leaves. A single isolated object, centered, fully visible with a small margin. Transparent background, no ground, no cast shadow, no text, no frame.",
+  "size": "1024x1024",
+  "transparent": true,
+  "out": "art/2d/decorado/rocas.png"
+ },
+ {
+  "prompt": "2D game asset for a dark fantasy top-down action roguelike. Hand-painted stylized game art that matches a mossy stone golem hero: bold readable shapes, thin dark outline around the whole silhouette, soft light from the top left, warm autumn forest palette (warm grey-brown stone, moss green, rust, amber glow), painterly texture. Three-quarter view seen slightly from above. Subject: an old cracked clay urn with a simple painted band, a breakable pot. A single isolated object, centered, fully visible with a small margin. Transparent background, no ground, no cast shadow, no text, no frame.",
+  "size": "1024x1024",
+  "transparent": true,
+  "out": "art/2d/decorado/urna.png"
+ },
+ {
+  "prompt": "2D game asset for a dark fantasy top-down action roguelike. Hand-painted stylized game art that matches a mossy stone golem hero: bold readable shapes, thin dark outline around the whole silhouette, soft light from the top left, warm autumn forest palette (warm grey-brown stone, moss green, rust, amber glow), painterly texture. Three-quarter view seen slightly from above. Subject: an ornate closed golden treasure chest with iron bands and a glowing amber gem on the lock. A single isolated object, centered, fully visible with a small margin. Transparent background, no ground, no cast shadow, no text, no frame.",
+  "size": "1024x1024",
+  "transparent": true,
+  "out": "art/2d/decorado/cofre.png"
+ },
+ {
+  "prompt": "2D game asset for a dark fantasy top-down action roguelike. Hand-painted stylized game art that matches a mossy stone golem hero: bold readable shapes, thin dark outline around the whole silhouette, soft light from the top left, warm autumn forest palette (warm grey-brown stone, moss green, rust, amber glow), painterly texture. Three-quarter view seen slightly from above. Subject: a small traveling merchant wagon with a striped canvas roof, crates, sacks and two warm lanterns, no people. A single isolated object, centered, fully visible with a small margin. Transparent background, no ground, no cast shadow, no text, no frame.",
+  "size": "1536x1024",
+  "transparent": true,
+  "out": "art/2d/decorado/mercader.png"
+ },
+ {
+  "prompt": "2D game asset for a dark fantasy top-down action roguelike. Hand-painted stylized game art that matches a mossy stone golem hero: bold readable shapes, thin dark outline around the whole silhouette, soft light from the top left, warm autumn forest palette (warm grey-brown stone, moss green, rust, amber glow), painterly texture. Three-quarter view seen slightly from above. Subject: a dark blood altar: a carved stone pedestal with red runes and a floating glowing red crystal orb above it. A single isolated object, centered, fully visible with a small margin. Transparent background, no ground, no cast shadow, no text, no frame.",
+  "size": "1024x1024",
+  "transparent": true,
+  "out": "art/2d/decorado/altar.png"
+ },
+ {
+  "prompt": "2D game asset for a dark fantasy top-down action roguelike. Hand-painted stylized game art that matches a mossy stone golem hero: bold readable shapes, thin dark outline around the whole silhouette, soft light from the top left, warm autumn forest palette (warm grey-brown stone, moss green, rust, amber glow), painterly texture. Three-quarter view seen slightly from above. Subject: a tall stone slab engraved with glowing cyan runes and a floating cyan orb above it. A single isolated object, centered, fully visible with a small margin. Transparent background, no ground, no cast shadow, no text, no frame.",
+  "size": "1024x1536",
+  "transparent": true,
+  "out": "art/2d/decorado/contrato.png"
+ },
+ {
+  "prompt": "2D game asset for a dark fantasy top-down action roguelike. Hand-painted stylized game art that matches a mossy stone golem hero: bold readable shapes, thin dark outline around the whole silhouette, soft light from the top left, warm autumn forest palette (warm grey-brown stone, moss green, rust, amber glow), painterly texture. Three-quarter view seen slightly from above. Subject: La Madre Raiz, a colossal corrupted ancient tree mother boss monster: a huge twisted living tree with a hollow bark face and glowing green eyes, massive root legs, long branch arms ending in claws, glowing green sap veins and purple corrupted mushrooms growing on her bark, menacing and majestic, facing right. A single isolated object, centered, fully visible with a small margin. Transparent background, no ground, no cast shadow, no text, no frame.",
+  "size": "1024x1536",
+  "transparent": true,
+  "out": "art/2d/decorado/madre_raiz.png"
+ }
+]

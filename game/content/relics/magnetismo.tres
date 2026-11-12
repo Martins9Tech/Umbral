@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RelicData" format=3]
+
+[ext_resource type="Script" path="res://core/data/relic_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"magnetismo"
+display_name = "Magnetismo"
+description = "+25 % de radio del imán por nivel."
+stat = &"magnet"
+kind = 1
+value_per_level = 0.25

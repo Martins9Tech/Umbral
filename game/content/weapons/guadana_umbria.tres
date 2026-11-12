@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3]
+
+[ext_resource type="Script" path="res://core/data/weapon_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://systems/weapons/guadana_umbria.gd" id="2_behaviour"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"guadana_umbria"
+display_name = "Guadaña Umbría"
+description = "Un tajo circular de sombra que remata a los enemigos casi muertos."
+tags = Array[StringName]([&"sombra", &"area"])
+is_signature = false
+behaviour = ExtResource("2_behaviour")

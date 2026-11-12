@@ -1,0 +1,125 @@
+{
+  "escala_fuente": 0.5,
+  "orden": [
+    "antebrazo_tras",
+    "brazo_tras",
+    "pierna_tras",
+    "muslo_tras",
+    "torso",
+    "pierna_del",
+    "muslo_del",
+    "antebrazo_del",
+    "brazo_del"
+  ],
+  "piezas": {
+    "brazo_tras": {
+      "padre": "torso",
+      "lejana": true,
+      "pivote": [
+        24.144999999999982,
+        25.620000000000005
+      ],
+      "enganche": [
+        113.90499999999997,
+        -183.68
+      ]
+    },
+    "antebrazo_tras": {
+      "padre": "brazo_tras",
+      "lejana": true,
+      "pivote": [
+        36.125,
+        7.0400000000000205
+      ],
+      "enganche": [
+        23.980000000000018,
+        45.920000000000016
+      ]
+    },
+    "muslo_tras": {
+      "padre": "torso",
+      "lejana": true,
+      "pivote": [
+        48.18000000000001,
+        32.80000000000001
+      ],
+      "enganche": [
+        71.94,
+        0.0
+      ]
+    },
+    "pierna_tras": {
+      "padre": "muslo_tras",
+      "lejana": true,
+      "pivote": [
+        50.67500000000001,
+        8.900000000000034
+      ],
+      "enganche": [
+        5.9950000000000045,
+        65.60000000000002
+      ]
+    },
+    "muslo_del": {
+      "padre": "torso",
+      "lejana": false,
+      "pivote": [
+        56.28499999999997,
+        19.91999999999996
+      ],
+      "enganche": [
+        -53.95500000000004,
+        13.119999999999948
+      ]
+    },
+    "pierna_del": {
+      "padre": "muslo_del",
+      "lejana": false,
+      "pivote": [
+        77.78999999999999,
+        13.080000000000041
+      ],
+      "enganche": [
+        -5.994999999999976,
+        72.16000000000008
+      ]
+    },
+    "brazo_del": {
+      "padre": "torso",
+      "lejana": false,
+      "pivote": [
+        78.33500000000001,
+        33.120000000000005
+      ],
+      "enganche": [
+        -113.905,
+        -183.68
+      ]
+    },
+    "antebrazo_del": {
+      "padre": "brazo_del",
+      "lejana": false,
+      "pivote": [
+        66.35499999999999,
+        6.099999999999994
+      ],
+      "enganche": [
+        -23.980000000000018,
+        52.47999999999999
+      ]
+    },
+    "torso": {
+      "padre": "",
+      "lejana": false,
+      "pivote": [
+        193.24,
+        348.8
+      ],
+      "enganche": [
+        0.0,
+        -249.28000000000003
+      ]
+    }
+  },
+  "altura": 598.08
+}

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"paso_ligero"
+display_name = "Paso Ligero"
+description = "El Paso se recarga un 35 % más rápido y +10 % de velocidad."
+rarity = 0
+stats = Array[StringName]([&"dash_cooldown", &"move_speed"])
+kinds = Array[int]([1, 1])
+values = Array[float]([-0.35, 0.1])

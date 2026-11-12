@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://systems/augments/impetu_eterno.gd" id="2_behaviour"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"impetu_eterno"
+display_name = "Ímpetu Eterno"
+description = "La Definitiva se carga sola con el tiempo y no se bloquea tras usarla."
+rarity = 2
+stats = Array[StringName]([])
+kinds = Array[int]([])
+values = Array[float]([])
+behaviour = ExtResource("2_behaviour")

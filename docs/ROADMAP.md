@@ -8,7 +8,7 @@
 
 ### Fase 0 · Preproducción
 - ✅ Cerrar las [decisiones](#decisiones) de base (2026-11-07).
-- Moodboard visual por reino y referencias de estilo para los campeones.
+- ✅ Moodboard (opción C, fantasía oscura pintada) y [guía de estilo](GUIA_ESTILO.md) (2026-11-07).
 - ✅ Repositorio Git + LFS, `.gitignore` de Godot y proyecto Godot 4.7 vacío en `game/` con la estructura de carpetas ([TECNICO §4.8](TECNICO.md#48-estructura-de-carpetas-propuesta)) (2026-11-07).
 
 **Criterio de salida:** moodboard listo y proyecto Godot creado con la estructura de carpetas.
@@ -22,6 +22,8 @@ Todo con cápsulas, cubos o placeholders de KayKit/Quaternius.
 - Gemas de XP, imán, vida, muerte, reinicio y pantalla de resumen.
 - Escena de stress test y consola de trucos básica.
 
+**Estado (2026-11-07):** primera versión jugable en `game/` con todo lo anterior: Orrun con su kit completo, 4 armas (la de firma + 3), 6 reliquias, 3 enemigos del Bosque, director, gemas, subida de nivel, resumen al morir, overlay de depuración (F1), trucos (F2-F7) y prueba de rendimiento automática. Mediciones en [TECNICO §3.1](TECNICO.md#31-mediciones-del-prototipo).
+
 **Criterio de salida:**
 - 60 FPS con 500+ enemigos en pantalla.
 - Una partida de 10 min es divertida incluso con placeholders.
@@ -29,19 +31,35 @@ Todo con cápsulas, cubos o placeholders de KayKit/Quaternius.
 - Decisión tomada sobre el co-op (condiciona la arquitectura de la Fase 2).
 
 ### Fase 2 · Sistemas núcleo
+**Hecho (2026-11-07):** código preparado para varios campeones (co-op); élites con afijos (Veloz, Blindado, Explosivo); cofres; evoluciones de las 4 armas; build visible en el HUD con niveles; menú de pausa visual; avisos y flechas a objetivos; **línea de tiempo del mapa (10 min), Heraldo, estampida y La Madre Raíz con 3 fases + último aliento, ataques telegrafiados y victoria**. El jefe aparece por tiempo (minuto 10); la variante del altar queda pendiente.
+
 - Probar las dos formas de que aparezca el jefe (por tiempo y por altar) y quedarse con una.
 - Stats y modificadores, efectos y disparadores, etiquetas.
-- Evoluciones y cofres de élite.
-- Aumentos (≥ 15, en las 3 rarezas) y sinergias (3 etiquetas).
-- Élites con afijos, Heraldo y **1 jefe con 3 fases** (La Madre Raíz).
-- Línea de tiempo completa de un reino, Mercader y 2 eventos de mapa.
+- ✅ Evoluciones y cofres de élite.
+- ✅ Aumentos (17, en las 3 rarezas) con críticos.
+- ✅ Sinergias de 5 elementos (2 y 3 armas), estados alterados y 7 armas elementales nuevas (11 en total + la de firma).
+- ✅ Élites con afijos, Heraldo y **1 jefe con 3 fases** (La Madre Raíz).
+- ✅ Línea de tiempo completa de un reino y estampida.
+- ✅ Oro, objetos rompibles (comida, imán, bomba, oro), Altar de Sangre, Mercader Errante y Contrato.
+- ✅ Registro de partidas (`user://telemetry`) y resumen con `tools/telemetry_report.py`.
+
+**La Fase 2 queda completa (2026-11-07).**
 - Telemetría de balance.
 
 **Criterio de salida:** un reino completo de 12 min con jefe, que apetece rejugar 10 veces con builds distintas.
 
 ### Fase 3 · Vertical slice — *calidad final, en pequeño*
+**En curso (2026-11-07):**
+- ✅ Estilo del moodboard aplicado al prototipo (suelo, luz, niebla, decorado y paleta).
+- ✅ Menú principal, selección de campeón, ajustes, guardado, Esencia, Armería (9 mejoras) y 8 logros que desbloquean 3 armas.
+- ✅ Orrun 3D probado (2026-11-08) con Hyper3D y Blender; **descartado al pasar a 2D** (el pipeline queda archivado en `tools/blender/`).
+- ✅ **Paso a 2D (2026-11-12):** Orrun como marioneta de 10 piezas animada por código (andar, puñetazo, zancada, golpe de tierra, paso, muerte), los 3 enemigos del Bosque con su dibujo y animación procedural (salto, galope, balanceo), suelo, efectos, telegrafías, jefa, cofres y eventos en 2D. Rendimiento: 1.500 enemigos con 5 ms de simulación y 2,2 ms de dibujado.
+- ✅ Mejoras tras la primera prueba (2026-11-12): marioneta recortada del dibujo entero (proporciones fieles), animaciones nuevas (paso pesado, directo y martillazo con congelación de impacto, embestida con estela, salto de esquiva, golpe de tierra), arreglado que la horda dejara de dibujarse al alejarse del centro y aparición justo fuera de la vista con más densidad, y cartas de elección con color e icono por categoría (arma, reliquia, kit, aumento, evolución, curación).
+- Provisional (dibujado por código, falta su arte): pilares, árboles, setas, urnas, cofres, mercader, altar, contrato y la Madre Raíz (usa el Tronco Hueco teñido).
+- Pendiente: arte del decorado y de la jefa, segundo campeón (Sela), VFX y audio.
+
 - Bosque de los Susurros con arte, iluminación, VFX y audio finales.
-- 2 campeones con modelo y animaciones finales.
+- 2 campeones con arte y animaciones finales.
 - 10-12 armas, 8 reliquias, 25 aumentos y 4 evoluciones.
 - UI final (HUD, subida de nivel, pausa, resumen), ajustes y guardado.
 - Hub en menú + meta-progresión básica (Esencia, Armería y 5-10 desbloqueos).
@@ -99,19 +117,20 @@ Calculado para **una persona a tiempo parcial (~10-15 h/semana)**. Es una estima
 | 3 | Esquiva | Paso común a todos los campeones |
 | 4 | Estructura de la run | Expedición (modo principal) + Supervivencia clásica |
 | 5 | Mapas | Grandes con límites + puntos de interés semialeatorios |
-| 6 | Cámara | Perspectiva con FOV estrecho (~55° de inclinación) |
+| 6 | Cámara | 2D cenital ligeramente inclinada (cambiado el 2026-11-12; antes perspectiva 3D a ~55°) |
 | 7 | Lenguaje | GDScript con tipado estático; núcleo de hordas aislado por si hubiera que pasarlo a C++ |
 | 8 | Texturas | Mixto: pintado a mano en campeones y jefes, atlas de color en el resto |
 | 9 | Equipo | Una persona a tiempo parcial, con apoyo de Claude Code |
 | 10 | Plataformas | PC (Steam), con soporte de mando |
 | 11 | Nombre | **Umbral** como nombre de trabajo |
+| 12 | Co-op | **Online, 2-4 jugadores** (decidido el 2026-11-07). El código se prepara desde la Fase 2; la red llega más tarde (ver [TECNICO §7](TECNICO.md#7-multijugador-online)) |
 
 ### Pendientes
 
 | Tema | Cuándo | Notas |
 |------|--------|-------|
 | Aparición del jefe (por tiempo o por altar) | Durante la Fase 2 | Montar ambas y elegir jugando |
-| Co-op (no / local / online) | Antes de empezar la Fase 2 | El online condiciona la arquitectura (autoridad y sincronización de cientos de enemigos) |
+| Co-op: subida de nivel compartida, reanimar, escalado por jugadores | Al implementar la red | Propuesta inicial en TECNICO §7 |
 | Nombre definitivo | Antes de crear la página de Steam | Comprobar disponibilidad en Steam, dominio y marca |
 | Otras plataformas (Steam Deck, consolas) | Tras el lanzamiento en PC | El soporte de mando ya lo deja preparado |
 
@@ -121,9 +140,9 @@ Calculado para **una persona a tiempo parcial (~10-15 h/semana)**. Es una estima
 
 | Riesgo | Impacto | Mitigación |
 |--------|---------|------------|
-| Rendimiento de hordas en 3D | Alto | Diseño orientado a datos + MultiMesh + VAT desde el prototipo; stress test periódico |
-| Alcance (una persona a tiempo parcial; el arte 3D es caro) | Muy alto | Placeholders CC0, atlas de color, vertical slice antes de producir contenido, Acceso Anticipado con contenido mínimo y recortar antes que retrasar ([ver Alcance](#alcance-y-calendario-orientativo)) |
-| Legibilidad caótica en 3D | Alto | Código de color reservado, opacidad de VFX regulable, contornos, telegrafías por encima de todo |
+| Rendimiento de hordas | Alto | Diseño orientado a datos + MultiMesh 2D con animación por código; stress test periódico |
+| Alcance (una persona a tiempo parcial; el arte es caro) | Muy alto | Placeholders CC0, atlas de color, vertical slice antes de producir contenido, Acceso Anticipado con contenido mínimo y recortar antes que retrasar ([ver Alcance](#alcance-y-calendario-orientativo)) |
+| Legibilidad caótica | Alto | Código de color reservado, opacidad de VFX regulable, contornos, telegrafías por encima de todo |
 | Co-op añadido tarde | Alto | Decidirlo antes de la Fase 2 |
 | Parecido a LoL / propiedad intelectual | Medio | Nombres, kits, terminología y estética propios; Riot ya tiene un modo similar (*Swarm*) del que hay que diferenciarse |
 | Balance con muchos sistemas cruzados | Medio | Telemetría, consola de trucos y hojas de cálculo como fuente de verdad |

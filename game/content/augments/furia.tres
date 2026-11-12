@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AugmentData" format=3]
+
+[ext_resource type="Script" path="res://core/data/augment_data.gd" id="1_data"]
+[ext_resource type="Script" path="res://systems/augments/furia.gd" id="2_behaviour"]
+
+[resource]
+script = ExtResource("1_data")
+id = &"furia"
+display_name = "Furia"
+description = "Tras usar la Definitiva, +50 % de daño durante 12 s."
+rarity = 1
+stats = Array[StringName]([])
+kinds = Array[int]([])
+values = Array[float]([])
+behaviour = ExtResource("2_behaviour")

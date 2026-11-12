@@ -10,7 +10,7 @@
 |------|----------|-------|
 | Motor | **Godot 4.7** | Renderer **Forward+** (PC) |
 | Lenguaje | **GDScript con tipado estático** | El núcleo de simulación (hordas, proyectiles, colisiones) queda aislado para migrarlo a **C++ (GDExtension)** o C# si el profiler lo pide |
-| 3D | **Blender** → glTF 2.0 (`.glb`) | |
+| Arte | **2D**: IA de imágenes + scripts de recorte (`tools/sprites/`) | El pipeline 3D (Blender) queda archivado en `tools/blender/` |
 | Versiones | **Git + Git LFS** | `.blend`, `.glb`, `.png` y `.wav` por LFS |
 | Tests | **gdUnit4** (o GUT) | Lógica pura: stats, fórmulas, efectos |
 | Automatización | **Claude Code + MCP de Godot y Blender** | Ya conectados en este equipo: crear escenas, exportar modelos en lote, scripts de Blender |
@@ -19,15 +19,14 @@
 
 ---
 
-## 2. Perspectiva 2.5D (plano 2D + elementos 3D)
+## 2. Mundo 2D
 
-- **Mundo 3D; lógica en el plano XZ (y = 0).** Todo el gameplay trabaja con `Vector2(x, z)`: colisiones, IA y spawns son 2D, lo que es más simple y más rápido. La altura es solo visual (proyectiles en arco, saltos, cuerpos voladores).
-- **Camera3D (decidido):** perspectiva con FOV estrecho (~30-35°), inclinación de ~55° y distancia fija; sigue al jugador con suavizado. El FOV y la inclinación exactos se ajustan en el prototipo.
-- **Iluminación:** una `DirectionalLight3D` con sombras y luz ambiental; shader toon opcional.
-- **Contornos:** *inverted hull* o post-proceso para el jugador, élites y jefes.
-- **Oclusión:** si algo tapa al jugador, se desvanece o se muestra su silueta a través de las paredes.
-
----
+- **Lógica en metros (`Vector2`).** Colisiones, IA, spawns y daño trabajan en metros, igual que antes del cambio a 2D.
+- **`Run.world`** es un `Node2D` escalado a píxeles (`Run.PPM` = 56 px/m): todo lo que cuelga de él se coloca y dibuja en metros.
+- **Capas** (de abajo arriba): suelo (shader `ground_forest_2d`), decorado bajo, efectos de suelo (telegrafías, discos, arena del jefe), gemas, objetos (urnas, cofres, eventos), horda, jefes, jugadores (ordenados por Y), armas, efectos aéreos (proyectiles, rayos) y copas de los árboles.
+- **Cámara:** `Camera2D` que sigue al campeón con suavizado; a 1080p se ven unos 34 × 19 m.
+- **Luz:** `CanvasModulate` para la penumbra y `PointLight2D` en el campeón y en las setas.
+- **Profundidad:** el campeón se dibuja siempre por encima de la horda (legibilidad); los enemigos grandes, por debajo de los pequeños.
 
 ## 3. Rendimiento de hordas — riesgo técnico n.º 1
 
@@ -36,8 +35,8 @@
 ### Reglas
 1. **Nada de un nodo con física por enemigo.** `CharacterBody3D` + `NavigationAgent3D` por enemigo no escala a cientos.
 2. **Simulación orientada a datos:** un `EnemySwarm` guarda en arrays (`PackedVector2Array`, `PackedFloat32Array`…) posición, velocidad, vida, tipo y estado de cada enemigo, y los actualiza en **un único bucle** por frame.
-3. **Render con `MultiMeshInstance3D`**, una por tipo de enemigo. Cada instancia lleva su transform y *custom data* (frame de animación, destello al recibir daño, disolución al morir).
-4. **Animación con VAT (Vertex Animation Textures):** las animaciones (andar, atacar, morir) se "hornean" en Blender a una textura, y un shader de vértices en Godot reproduce el frame de cada instancia. Para los enemigos más simples basta con animación procedural en shader (balanceo, *squash & stretch*).
+3. **Render con `MultiMeshInstance2D`**, una por tipo de enemigo y otra para las sombras. Cada instancia lleva su transform, un color (estados) y *custom data* (destello al recibir daño, shader `horda_2d`).
+4. **Animación procedural:** cada tipo salta, galopa o se balancea; se calcula al escribir el buffer (rotación, escala y altura por instancia). Si el profiler lo pide, se puede pasar al shader.
 5. **Colisiones con rejilla espacial (spatial hash):** enemigo-enemigo (separación), proyectil-enemigo y jugador-enemigo, todo como círculo contra círculo.
 6. **Movimiento:** perseguir + separación para la mayoría; **flow field** (BFS sobre una rejilla desde el jugador, recalculado 4-5 veces por segundo) en mapas con obstáculos.
 7. **Pooling de todo:** proyectiles, gemas, números de daño y efectos visuales. Nada se crea ni se destruye en pleno combate.
@@ -46,6 +45,44 @@
 10. **Élites y jefes sí son escenas completas** (son pocos): `AnimationTree`, hitboxes reales, física (Jolt) si hace falta.
 11. **Profiling desde el día 1:** monitor de FPS, contador de entidades, tiempos de simulación y una escena de **stress test** (2.000 enemigos).
 12. **Plan B:** como `EnemySwarm` y `ProjectileSystem` están aislados detrás de una API de datos, se pueden reescribir en GDExtension sin tocar el resto del juego.
+
+### 3.1 Mediciones del prototipo
+
+Prueba automática sin ventana (`--fixed-fps 60`, 600 frames medidos, solo CPU):
+
+| Prueba | Enemigos | Simulación (media / máx.) | Preparar el dibujado |
+|--------|----------|---------------------------|----------------------|
+| Estrés (`--autotest --stress`): 1.500 enemigos encima del campeón (3D, 2026-11-07) | ~1.050 de media | 8,8 ms / 18 ms | 0,4 ms |
+| Estrés en 2D (2026-11-12), con ventana | ~750 de media | 5,1 ms / 17 ms | 2,2 ms (animación por enemigo) |
+
+- Coste aproximado: **~8 µs por enemigo y frame**, casi todo en la separación entre vecinos.
+- Con 500 enemigos en pantalla son ~4 ms: el criterio de la Fase 1 se cumple en CPU. Con el máximo del Director (1.200 vivos) ronda los 10 ms, ajustado pero viable.
+- Falta medir los FPS reales con ventana y GPU (overlay F1 en el editor).
+- Si hiciera falta más margen, por orden: calcular la separación en frames alternos y, después, pasar `EnemySwarm` a GDExtension.
+
+**Cómo repetir la prueba:**
+```
+Godot_v4.7.2-stable_win64_console.exe --headless --path game --fixed-fps 60 -- --autotest --stress
+```
+Sin `--stress`, la prueba da todas las armas y mide una partida con el Director acelerado.
+
+### 3.2 Pruebas de dificultad
+
+Partidas reales sin modo dios hasta morir o 15 min; imprimen `[BALANCE]` con tiempo, nivel y muertes:
+- `-- --autotest --idle`: el jugador no se mueve (caso peor).
+- `-- --autotest --bot`: un bot sencillo que huye de la horda, recoge cofres cercanos y usa la Técnica y la Definitiva en cuanto puede.
+
+Añadiendo `--god` (`-- --autotest --bot --god`) el bot no muere: sirve para medir a qué nivel llega al minuto 10 y cuánto tarda en matar a la jefa.
+
+Otras pruebas: `-- --autotest --augments` activa los 17 aumentos a la vez con el bot (caza errores de interacción); `-- --autotest --boss` lleva directamente a la jefa con una build fuerte e imprime `[BOSS]` cada 10 s; `-- --autotest --evo` comprueba que un cofre evoluciona un arma lista; `-- --autotest --showcase` prepara una escena con build variada, élite, cofre y menú de pausa para capturas (con `--write-movie`).
+
+| Ajuste (2026-11-07) | Quieto | Bot |
+|---------------------|--------|-----|
+| Inicial | muere en 1:07 | **sobrevive 15 min** (nivel 54) |
+| Calibrado | muere en 0:37-0:59 | muere hacia 4:10 (nivel 14) |
+| Con mapa de 10 min y jefa (curva más suave) | muere en ~0:30 | muere entre 3:40 y 6:20; en modo dios llega a la jefa a nivel 27 y la mata en 56 s (2 evoluciones) o ~115 s (sin evoluciones) |
+
+Cambios del calibrado: enemigos más rápidos (el Lobo supera al jugador) y con más daño, curva de XP `5 + 10n + 0,6n²`, vida de los enemigos `×(1 + 0,25m + 0,04m²)`, densidad mínima por minuto, Orrun con menos vida y armadura, y la Definitiva que deja de cargar 20 s tras usarla (antes casi se encadenaba y daba invulnerabilidad permanente).
 
 ---
 
@@ -128,12 +165,22 @@
 - **Telemetría de balance:** al acabar cada run se guarda un JSON/CSV con daño por arma, aumentos elegidos, tiempo y causa de muerte.
 - **Stress test** de enemigos y proyectiles.
 
+**Registro de partidas (implementado):** al terminar cada partida se guarda un JSON en `user://telemetry` (en Windows: `%APPDATA%\Godot\app_userdata\Umbral\telemetry`) con resultado, tiempo, nivel, oro, causa de la muerte, build, daño por fuente, elecciones y una instantánea por minuto. Las partidas del bot se marcan con `"modo": "bot"`. Resumen:
+```
+python tools/telemetry_report.py            # tus partidas
+python tools/telemetry_report.py --modo bot
+```
+
+**Guardado (implementado):** `SaveManager` guarda el progreso en `user://save.json` (Esencia, Armería, logros, estadísticas; versionado) y los ajustes en `user://settings.cfg`. Las pruebas automáticas nunca lo modifican. Prueba de la progresión con un guardado aparte: `-- --metatest --test-save`.
+
 ### 4.10 Balance con hojas de cálculo
 Las tablas numéricas (armas por nivel, enemigos, curvas de XP y del Director) viven en una hoja de cálculo. Un script `@tool` de Godot importa el CSV y genera o actualiza los `.tres`. La hoja es la fuente de verdad de los números; el editor, la del resto.
 
 ---
 
-## 5. Pipeline de arte (Blender → Godot)
+## 5. Pipeline de arte
+
+> **Actual (2D):** ver [GUIA_ESTILO §11](GUIA_ESTILO.md#11-arte-2d-flujo-de-producción). Lo que sigue es el pipeline 3D original, archivado por si se recupera.
 
 ### 5.1 Especificaciones orientativas
 | Elemento | Triángulos | Texturas | Animación |
@@ -149,6 +196,14 @@ Las tablas numéricas (armas por nivel, enemigos, curvas de XP y del Director) v
 - **Nombres:** `chr_orrun.glb`, `enm_bosque_seta.glb`, `prop_bosque_arbol_01.glb`. Animaciones: `idle`, `run`, `dash`, `cast_tech`, `cast_ult`, `hit`, `death`, `victory`.
 - **Importación:** usar sufijos de Godot (`-col`, `-colonly`) para colisiones y scripts de post-importación para asignar materiales.
 - Godot puede importar `.blend` directamente (con Blender instalado), lo que es cómodo para iterar. Para builds estables se recomienda exportar `.glb` con un script por lotes, automatizable con el MCP de Blender.
+
+### 5.1.1 Campeones generados con IA (Hyper3D)
+Flujo usado con Orrun:
+1. Generar el modelo en Hyper3D (Rodin) desde las vistas de `art/referencias/` y descargar las animaciones (máx. 5 por descarga; todas comparten esqueleto de 52 huesos). Los zips originales van a `art/modelos/<campeón>/fuente/` (ignorado por git). Usar `base_basic_pbr.glb`, que es el que lleva esqueleto.
+2. Optimizar en Blender en segundo plano (~70 s):
+   `blender -b --python tools/blender/optimize_character.py -- --glb A/base_basic_pbr.glb B/base_basic_pbr.glb --emissive A/texture_emissive.png --out art/modelos/orrun/orrun.glb --tris 15000 --tex 1024`
+   El script junta todas las animaciones en un GLB (una pista NLA por animación), quita objetos sueltos, reduce la malla, conecta la textura emisiva, baja las texturas y deja las animaciones **en el sitio** (quita la deriva del hueso `Hips`; el juego mueve al personaje). Las que contienen `Dying` o `Fall` conservan su desplazamiento (`--keep-root-motion`).
+3. Copiar el GLB a `game/assets/models/<campeón>/` y declarar en el kit `model_path`, `model_scale` y `model_anims` (acción del juego → nombre de la animación). `Player` sustituye la cápsula por el modelo, avanza el `AnimationPlayer` a mano (se congela en pausa), aplica tintes con `material_overlay` y añade un borde de luz para que la silueta destaque sobre el suelo.
 
 ### 5.2 Animación
 - **Rig:** Rigify (gratis) o Auto-Rig Pro (de pago).
@@ -193,3 +248,32 @@ Las tablas numéricas (armas por nivel, enemigos, curvas de XP y del Director) v
 | Balance | Google Sheets / Excel → CSV → importador `@tool` | — |
 | Tests | gdUnit4 / GUT | Gratis |
 | Steam | GodotSteam | Gratis |
+
+---
+
+## 7. Multijugador online
+
+**Decidido (2026-11-07):** co-op online de 2 a 4 jugadores. La red se implementará más adelante, pero el código se escribe desde la Fase 2 para que añadirla no obligue a rehacer el juego.
+
+### 7.1 Modelo: anfitrión con autoridad
+- Un jugador hace de **anfitrión** y simula todo: horda, proyectiles, daño, botín, director.
+- Los demás **solo envían su intención** (`PlayerInput`: movimiento, apuntado y botones) y reciben el estado para dibujarlo, interpolado.
+- Sin simulación determinista ni *rollback*: más sencillo y robusto con cientos de enemigos.
+
+### 7.2 Reglas para el código desde ya
+1. **La simulación nunca lee el teclado o el ratón**: todo entra por `PlayerInput`. Hoy se rellena en local; mañana llegará por red.
+2. **Nada asume un único jugador**: la partida tiene `players`; cada `Player` lleva su kit, sus armas, sus reliquias y su daño. `run.player` es solo el jugador local (cámara y HUD).
+3. **El azar sale de los RNG de la partida** (`rng_spawn`, `rng_loot`), que solo usa el anfitrión.
+4. **Lo puramente visual** (VFX, temblor de cámara) se podrá emitir como evento para los clientes.
+
+### 7.3 Transporte y sincronización (propuesta)
+- **Desarrollo y LAN:** `ENetMultiplayerPeer` de Godot.
+- **Lanzamiento:** redes de Steam con **GodotSteam** (lobbies, invitaciones y relay de Steam, sin problemas de NAT).
+- **Instantáneas a ~20 Hz:** jugadores completos; enemigos comprimidos (posición en int16 + tipo + flags ≈ 6 bytes). 1.000 enemigos ≈ 120 KB/s por cliente, que se reducirá enviando solo lo cercano a cada cliente y por deltas.
+- **Eventos fiables** para lo puntual: muertes, cofres, subidas de nivel, VFX importantes.
+
+### 7.4 Diseño de co-op (propuesta, a validar)
+- **Experiencia y nivel compartidos.** Al subir de nivel se pausa para todos; cada jugador elige su mejora y se continúa cuando todos han elegido (o a los 20 s, con elección automática).
+- **Cofres:** para quien los toca.
+- **Caer en combate:** el jugador queda derribado y un compañero lo reanima quedándose cerca unos segundos; la partida acaba si caen todos.
+- **Escalado:** vida de enemigos ×(1 + 0,6 por jugador extra) y densidad ×(1 + 0,5 por jugador extra).

@@ -11,10 +11,19 @@ config_version=5
 [application]
 
 config/name="Umbral"
-config/description="Roguelike de supervivencia contra hordas en 3D isométrico."
+config/description="Roguelike de supervivencia contra hordas en 2D."
 config/version="0.0.1"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
+run/main_scene="res://scenes/menu/main_menu.tscn"
+
+[autoload]
+
+EventBus="*res://autoload/event_bus.gd"
+InputActions="*res://autoload/input_actions.gd"
+ContentDB="*res://autoload/content_db.gd"
+SaveManager="*res://autoload/save_manager.gd"
+GameSession="*res://autoload/game_session.gd"
 
 [debug]
 
